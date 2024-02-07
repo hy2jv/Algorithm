@@ -1,19 +1,19 @@
 import java.io.*;
-import java.util.*;
+import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(br.readLine());
-        int cnt = 0;
-        while (n>0) {
-            if (n%5==0) {
-                cnt += n/5;
-                break;
-            }
-            n -= 3; cnt++;
+        int[] dp = new int[n + 5];
+
+        Arrays.fill(dp, 5001);
+        dp[3] = dp[5] = 1;
+
+        for (int i = 6; i <= n; i++) {
+            dp[i] = Math.min(dp[i - 3], dp[i - 5]) + 1;
         }
-        if(n<0) System.out.println("-1");
-        else System.out.println(cnt);
+
+        System.out.println(dp[n] > 5000 ? -1 : dp[n]);
     }
 }
