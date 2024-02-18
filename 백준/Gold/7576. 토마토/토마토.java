@@ -1,6 +1,4 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.*;
 
 public class Main {
@@ -11,12 +9,6 @@ public class Main {
     static Queue<Position> queue = new LinkedList<>();
 
     public static void main(String[] args) throws IOException {
-        initFields();
-        bfs();
-        System.out.println(getResult());
-    }
-
-    static void initFields() throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
         M = Integer.parseInt(st.nextToken());
@@ -32,15 +24,13 @@ public class Main {
                 }
             }
         }
-    }
 
-    static void bfs() {
         while (!queue.isEmpty()) {
             Position pos = queue.poll();
             for (int i = 0; i < 4; i++) {
                 int nx = pos.x + DX[i];
                 int ny = pos.y + DY[i];
-                if (isInValidPosition(nx, ny)) {
+                if (nx < 0 || nx >= N || ny < 0 || ny >= M) {
                     continue;
                 }
                 if (arr[nx][ny] == -1) {
@@ -52,10 +42,8 @@ public class Main {
                 }
             }
         }
-    }
 
-    static boolean isInValidPosition(int x, int y) {
-        return x < 0 || x >= N || y < 0 || y >= M;
+        System.out.println(getResult());
     }
 
     static int getResult() {
